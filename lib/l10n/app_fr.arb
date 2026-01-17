@@ -1,0 +1,11 @@
+{
+  "@@locale": "fr",
+  "appTitle": "Minuteur d'Entraînement",
+  "round": "Tour",
+  "lessonStartTime": "Heure de Début de la Leçon",
+  "workout": "Entraînement",
+  "rest": "Repos",
+  "min": "min",
+  "mins": "min(s)"
+}
+

@@ -4,6 +4,9 @@ import 'package:audioplayers/audioplayers.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'dart:async';
 import 'dart:math' as math;
+import 'package:flutter/widgets.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:workout_timer/l10n/app_localizations.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -22,7 +25,44 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Workout Timer',
-      theme: ThemeData(primarySwatch: Colors.grey, useMaterial3: false),
+      theme: ThemeData(
+        primarySwatch: Colors.grey,
+        useMaterial3: false,
+        brightness: Brightness.light,
+        scaffoldBackgroundColor: Colors.white,
+        colorScheme: const ColorScheme.light(
+          primary: Colors.grey,
+          secondary: Colors.grey,
+        ),
+      ),
+      darkTheme: ThemeData(
+        primarySwatch: Colors.grey,
+        useMaterial3: false,
+        brightness: Brightness.dark,
+        scaffoldBackgroundColor: const Color(0xFF121212),
+        colorScheme: const ColorScheme.dark(
+          primary: Colors.grey,
+          secondary: Colors.grey,
+          surface: Color(0xFF1E1E1E),
+        ),
+      ),
+      themeMode:
+          ThemeMode.system, // Automatically switch based on system settings
+      localizationsDelegates: [
+        AppLocalizations.delegate,
+        GlobalMaterialLocalizations.delegate,
+        GlobalWidgetsLocalizations.delegate,
+        GlobalCupertinoLocalizations.delegate,
+      ],
+      supportedLocales: const [
+        Locale('en'), // English
+        Locale('es'), // Spanish
+        Locale('fr'), // French
+        Locale('zh'), // Chinese (Simplified)
+        Locale('zh', 'TW'), // Chinese (Traditional - Taiwan)
+        Locale('zh', 'HK'), // Chinese (Traditional - Hong Kong)
+        Locale('ja'), // Japanese
+      ],
       home: const WorkoutTimerPage(),
       debugShowCheckedModeBanner: false,
     );
@@ -86,7 +126,8 @@ class WorkoutTimerPage extends StatefulWidget {
   State<WorkoutTimerPage> createState() => _WorkoutTimerPageState();
 }
 
-class _WorkoutTimerPageState extends State<WorkoutTimerPage> {
+class _WorkoutTimerPageState extends State<WorkoutTimerPage>
+    with WidgetsBindingObserver {
   final List<double> workoutTimeMinutesList = [1, 2, 3, 4, 5, 10, 15, 30];
   final List<double> restTimeMinutesList = [0.5, 1, 2, 3, 4, 5, 10];
 
@@ -102,8 +143,29 @@ class _WorkoutTimerPageState extends State<WorkoutTimerPage> {
   int round = 0;
   String startTime = "";
 
-  final Color pauseColor = const Color.fromRGBO(242, 242, 242, 1.0);
-  final Color textColor = const Color.fromRGBO(102, 102, 102, 1.0);
+  // Theme-aware color getters
+  Color get pauseColor => Theme.of(context).brightness == Brightness.dark
+      ? const Color.fromRGBO(60, 60, 60, 1.0)
+      : const Color.fromRGBO(242, 242, 242, 1.0);
+
+  Color get textColor => Theme.of(context).brightness == Brightness.dark
+      ? const Color.fromRGBO(200, 200, 200, 1.0)
+      : const Color.fromRGBO(102, 102, 102, 1.0);
+
+  Color get backgroundColor => Theme.of(context).brightness == Brightness.dark
+      ? const Color.fromRGBO(40, 40, 40, 1.0)
+      : const Color.fromRGBO(217, 217, 217, 1.0);
+
+  Color get buttonBackgroundColor =>
+      Theme.of(context).brightness == Brightness.dark
+      ? const Color.fromRGBO(60, 60, 60, 1.0)
+      : const Color.fromRGBO(242, 242, 242, 1.0);
+
+  Color get cardBackgroundColor =>
+      Theme.of(context).brightness == Brightness.dark
+      ? const Color.fromRGBO(40, 40, 40, 1.0)
+      : const Color.fromRGBO(242, 242, 242, 1.0);
+
   Color circleColor = const Color.fromRGBO(242, 242, 242, 1.0);
 
   Timer? timer;
@@ -112,6 +174,7 @@ class _WorkoutTimerPageState extends State<WorkoutTimerPage> {
   @override
   void initState() {
     super.initState();
+    WidgetsBinding.instance.addObserver(this);
     _loadPreferences().then((_) {
       _initializeAudio();
       _updateStartTime();
@@ -120,11 +183,26 @@ class _WorkoutTimerPageState extends State<WorkoutTimerPage> {
     });
   }
 
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    super.didChangeAppLifecycleState(state);
+    // Ensure audio session stays active when app goes to background
+    if (state == AppLifecycleState.paused ||
+        state == AppLifecycleState.inactive) {
+      // Keep audio session active for background playback
+      _initializeAudio();
+    }
+  }
+
   Future<void> _loadPreferences() async {
     final prefs = await SharedPreferences.getInstance();
     setState(() {
-      countDownFromIndex = prefs.getInt('count_down_index') ?? 0;
-      restTimeFromIndex = prefs.getInt('rest_time_from_index') ?? 0;
+      countDownFromIndex =
+          prefs.getInt('count_down_index') ??
+          2; // Default to 3 minutes (index 2)
+      restTimeFromIndex =
+          prefs.getInt('rest_time_from_index') ??
+          1; // Default to 1 minute (index 1)
     });
   }
 
@@ -136,6 +214,10 @@ class _WorkoutTimerPageState extends State<WorkoutTimerPage> {
 
   Future<void> _initializeAudio() async {
     audioPlayer = AudioPlayer();
+    // Configure for background playback
+    await audioPlayer?.setPlayerMode(PlayerMode.mediaPlayer);
+    // Set release mode to release for background playback
+    await audioPlayer?.setReleaseMode(ReleaseMode.release);
     // Note: You'll need to add a boxingbell.mp3 file to assets/sounds/
     // For now, we'll use a system sound as fallback
   }
@@ -199,6 +281,19 @@ class _WorkoutTimerPageState extends State<WorkoutTimerPage> {
     _savePreferences();
   }
 
+  void _updateCircleColor() {
+    if (!mounted) return;
+    if (!isRunning) {
+      circleColor = pauseColor;
+    } else if (timeRemaining > 0) {
+      circleColor = const Color.fromRGBO(0, 255, 0, 1.0); // Green for workout
+    } else if (restTimeRemaining > 0) {
+      circleColor = const Color.fromRGBO(255, 0, 0, 1.0); // Red for rest
+    } else {
+      circleColor = pauseColor;
+    }
+  }
+
   (int, int) _shiftCountDownList(int index, List<double> list) {
     int returnIndex = index + 1;
     if (returnIndex >= list.length) {
@@ -217,6 +312,7 @@ class _WorkoutTimerPageState extends State<WorkoutTimerPage> {
   Future<void> _playSound() async {
     try {
       // Try to play boxingbell.mp3 from assets
+      // PlayerMode is already set to mediaPlayer in _initializeAudio for background playback
       await audioPlayer?.play(AssetSource('sounds/boxingbell.mp3'));
     } catch (e) {
       // Fallback to system sound if asset not found
@@ -238,7 +334,7 @@ class _WorkoutTimerPageState extends State<WorkoutTimerPage> {
           timeRemainingText = _numberToDisplayTime(restTimeRemaining);
         }
       } else {
-        circleColor = pauseColor;
+        _updateCircleColor();
       }
     });
   }
@@ -246,7 +342,7 @@ class _WorkoutTimerPageState extends State<WorkoutTimerPage> {
   void _stopTimer() {
     setState(() {
       isRunning = false;
-      circleColor = pauseColor;
+      _updateCircleColor();
       timeRemaining = countDownFrom;
       restTimeRemaining = restTimeFrom;
       round = 0;
@@ -263,13 +359,13 @@ class _WorkoutTimerPageState extends State<WorkoutTimerPage> {
         if (isResetting) {
           isResetting = false;
           isRunning = false;
-          circleColor = const Color.fromRGBO(0, 255, 0, 1.0);
+          _updateCircleColor();
           timeRemainingText = _numberToDisplayTimeExact(timeRemaining);
           return;
         }
 
         if (!isRunning) {
-          circleColor = pauseColor;
+          _updateCircleColor();
           return;
         }
 
@@ -304,6 +400,7 @@ class _WorkoutTimerPageState extends State<WorkoutTimerPage> {
 
   @override
   void dispose() {
+    WidgetsBinding.instance.removeObserver(this);
     timer?.cancel();
     audioPlayer?.dispose();
     super.dispose();
@@ -311,8 +408,10 @@ class _WorkoutTimerPageState extends State<WorkoutTimerPage> {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
+
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.all(16.0),
@@ -327,7 +426,7 @@ class _WorkoutTimerPageState extends State<WorkoutTimerPage> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        "Round",
+                        l10n.round,
                         style: TextStyle(
                           color: textColor,
                           fontSize: 16,
@@ -357,7 +456,7 @@ class _WorkoutTimerPageState extends State<WorkoutTimerPage> {
                       crossAxisAlignment: CrossAxisAlignment.end,
                       children: [
                         Text(
-                          "Lesson Start Time",
+                          l10n.lessonStartTime,
                           style: TextStyle(
                             color: textColor,
                             fontSize: 16,
@@ -409,7 +508,7 @@ class _WorkoutTimerPageState extends State<WorkoutTimerPage> {
                         painter: RoundedCircularProgressPainter(
                           progress: 1.0,
                           strokeWidth: 30,
-                          color: const Color.fromRGBO(217, 217, 217, 1.0),
+                          color: backgroundColor,
                           startAngle:
                               -math.pi / 2, // -90 degrees (rotated left)
                           outerRadius:
@@ -448,7 +547,7 @@ class _WorkoutTimerPageState extends State<WorkoutTimerPage> {
                               width: 80,
                               height: 80,
                               decoration: BoxDecoration(
-                                color: const Color.fromRGBO(242, 242, 242, 1.0),
+                                color: buttonBackgroundColor,
                                 shape: BoxShape.circle,
                                 border: Border.all(
                                   color: textColor.withOpacity(0.3),
@@ -475,12 +574,7 @@ class _WorkoutTimerPageState extends State<WorkoutTimerPage> {
                                 width: 50,
                                 height: 50,
                                 decoration: BoxDecoration(
-                                  color: const Color.fromRGBO(
-                                    242,
-                                    242,
-                                    242,
-                                    1.0,
-                                  ),
+                                  color: buttonBackgroundColor,
                                   shape: BoxShape.circle,
                                   border: Border.all(
                                     color: textColor.withOpacity(0.3),
@@ -529,7 +623,7 @@ class _WorkoutTimerPageState extends State<WorkoutTimerPage> {
                             horizontal: 12,
                           ),
                           decoration: BoxDecoration(
-                            color: const Color.fromRGBO(242, 242, 242, 1.0),
+                            color: cardBackgroundColor,
                             borderRadius: BorderRadius.circular(12),
                             border: Border.all(
                               color: textColor.withOpacity(0.2),
@@ -541,7 +635,7 @@ class _WorkoutTimerPageState extends State<WorkoutTimerPage> {
                             mainAxisSize: MainAxisSize.min,
                             children: [
                               Text(
-                                "Workout",
+                                l10n.workout,
                                 style: TextStyle(
                                   color: textColor.withOpacity(0.7),
                                   fontSize: 12,
@@ -566,7 +660,7 @@ class _WorkoutTimerPageState extends State<WorkoutTimerPage> {
                                       left: 4,
                                     ),
                                     child: Text(
-                                      "min",
+                                      l10n.min,
                                       style: TextStyle(
                                         color: textColor.withOpacity(0.7),
                                         fontSize: 14,
@@ -605,7 +699,7 @@ class _WorkoutTimerPageState extends State<WorkoutTimerPage> {
                             horizontal: 12,
                           ),
                           decoration: BoxDecoration(
-                            color: const Color.fromRGBO(242, 242, 242, 1.0),
+                            color: cardBackgroundColor,
                             borderRadius: BorderRadius.circular(12),
                             border: Border.all(
                               color: textColor.withOpacity(0.2),
@@ -617,7 +711,7 @@ class _WorkoutTimerPageState extends State<WorkoutTimerPage> {
                             mainAxisSize: MainAxisSize.min,
                             children: [
                               Text(
-                                "Rest",
+                                l10n.rest,
                                 style: TextStyle(
                                   color: textColor.withOpacity(0.7),
                                   fontSize: 12,
@@ -645,7 +739,7 @@ class _WorkoutTimerPageState extends State<WorkoutTimerPage> {
                                       left: 4,
                                     ),
                                     child: Text(
-                                      "min",
+                                      l10n.min,
                                       style: TextStyle(
                                         color: textColor.withOpacity(0.7),
                                         fontSize: 14,

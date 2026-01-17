@@ -1,0 +1,32 @@
+{
+  "@@locale": "en",
+  "appTitle": "Workout Timer",
+  "@appTitle": {
+    "description": "The title of the application"
+  },
+  "round": "Round",
+  "@round": {
+    "description": "Label for round counter"
+  },
+  "lessonStartTime": "Lesson Start Time",
+  "@lessonStartTime": {
+    "description": "Label for lesson start time"
+  },
+  "workout": "Workout",
+  "@workout": {
+    "description": "Label for workout time"
+  },
+  "rest": "Rest",
+  "@rest": {
+    "description": "Label for rest time"
+  },
+  "min": "min",
+  "@min": {
+    "description": "Abbreviation for minutes"
+  },
+  "mins": "min(s)",
+  "@mins": {
+    "description": "Abbreviation for minutes with plural"
+  }
+}
+

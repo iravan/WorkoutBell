@@ -1,0 +1,11 @@
+{
+  "@@locale": "es",
+  "appTitle": "Temporizador de Entrenamiento",
+  "round": "Ronda",
+  "lessonStartTime": "Hora de Inicio de la Lección",
+  "workout": "Entrenamiento",
+  "rest": "Descanso",
+  "min": "min",
+  "mins": "min(s)"
+}
+

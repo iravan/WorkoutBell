@@ -5,8 +5,18 @@ plugins {
     id("dev.flutter.flutter-gradle-plugin")
 }
 
+// Read version from pubspec.yaml
+val pubspecVersion = file("../../pubspec.yaml").readText()
+    .let { text ->
+        val versionMatch = Regex("version:\\s*(.+)").find(text)
+        versionMatch?.groupValues?.get(1)?.trim() ?: "1.0.0+1"
+    }
+val (appVersionName, appVersionCode) = pubspecVersion.split("+").let {
+    Pair(it[0], if (it.size > 1) it[1].toInt() else 1)
+}
+
 android {
-    namespace = "com.example.workout_timer"
+    namespace = "com.codestopapp.workoutBell"
     compileSdk = flutter.compileSdkVersion
     ndkVersion = flutter.ndkVersion
 
@@ -21,13 +31,15 @@ android {
 
     defaultConfig {
         // TODO: Specify your own unique Application ID (https://developer.android.com/studio/build/application-id.html).
-        applicationId = "com.example.workout_timer"
+        applicationId = "com.codestopapp.workoutBell"
         // You can update the following values to match your application needs.
         // For more information, see: https://flutter.dev/to/review-gradle-config.
         minSdk = flutter.minSdkVersion
         targetSdk = flutter.targetSdkVersion
-        versionCode = flutter.versionCode
-        versionName = flutter.versionName
+        // Version from pubspec.yaml: 1.0.0+1
+        // versionCode is the build number (1), versionName is the version (1.0.0)
+        versionCode = appVersionCode
+        versionName = appVersionName
     }
 
     buildTypes {

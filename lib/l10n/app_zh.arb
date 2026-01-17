@@ -1,0 +1,11 @@
+{
+  "@@locale": "zh",
+  "appTitle": "锻炼计时器",
+  "round": "轮次",
+  "lessonStartTime": "课程开始时间",
+  "workout": "锻炼",
+  "rest": "休息",
+  "min": "分钟",
+  "mins": "分钟"
+}
+
