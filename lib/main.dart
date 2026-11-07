@@ -4,13 +4,15 @@ import 'package:audioplayers/audioplayers.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'dart:async';
 import 'dart:math' as math;
-import 'package:flutter/widgets.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:workout_timer/l10n/app_localizations.dart';
+import 'package:wakelock_plus/wakelock_plus.dart';
 
-void main() {
+void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  // Keep screen on
+  // Keep screen on - enable wakelock for both Android and iOS
+  await WakelockPlus.enable();
+  // Set preferred orientations
   SystemChrome.setPreferredOrientations([
     DeviceOrientation.portraitUp,
     DeviceOrientation.portraitDown,
@@ -24,7 +26,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Workout Timer',
+      title: 'WorkoutBell',
       theme: ThemeData(
         primarySwatch: Colors.grey,
         useMaterial3: false,
@@ -191,6 +193,10 @@ class _WorkoutTimerPageState extends State<WorkoutTimerPage>
         state == AppLifecycleState.inactive) {
       // Keep audio session active for background playback
       _initializeAudio();
+    }
+    // Ensure wakelock stays enabled (screen stays on) when app resumes
+    if (state == AppLifecycleState.resumed) {
+      WakelockPlus.enable();
     }
   }
 
@@ -403,6 +409,8 @@ class _WorkoutTimerPageState extends State<WorkoutTimerPage>
     WidgetsBinding.instance.removeObserver(this);
     timer?.cancel();
     audioPlayer?.dispose();
+    // Note: We keep wakelock enabled even after dispose since this is a workout timer app
+    // The wakelock will be automatically released when the app is closed
     super.dispose();
   }
 
@@ -550,7 +558,7 @@ class _WorkoutTimerPageState extends State<WorkoutTimerPage>
                                 color: buttonBackgroundColor,
                                 shape: BoxShape.circle,
                                 border: Border.all(
-                                  color: textColor.withOpacity(0.3),
+                                  color: textColor.withValues(alpha: 0.3),
                                   width: 1,
                                 ),
                               ),
@@ -577,7 +585,7 @@ class _WorkoutTimerPageState extends State<WorkoutTimerPage>
                                   color: buttonBackgroundColor,
                                   shape: BoxShape.circle,
                                   border: Border.all(
-                                    color: textColor.withOpacity(0.3),
+                                    color: textColor.withValues(alpha: 0.3),
                                     width: 1,
                                   ),
                                 ),
@@ -626,7 +634,7 @@ class _WorkoutTimerPageState extends State<WorkoutTimerPage>
                             color: cardBackgroundColor,
                             borderRadius: BorderRadius.circular(12),
                             border: Border.all(
-                              color: textColor.withOpacity(0.2),
+                              color: textColor.withValues(alpha: 0.2),
                               width: 1,
                             ),
                           ),
@@ -637,7 +645,7 @@ class _WorkoutTimerPageState extends State<WorkoutTimerPage>
                               Text(
                                 l10n.workout,
                                 style: TextStyle(
-                                  color: textColor.withOpacity(0.7),
+                                  color: textColor.withValues(alpha: 0.7),
                                   fontSize: 12,
                                   fontWeight: FontWeight.w400,
                                 ),
@@ -662,7 +670,7 @@ class _WorkoutTimerPageState extends State<WorkoutTimerPage>
                                     child: Text(
                                       l10n.min,
                                       style: TextStyle(
-                                        color: textColor.withOpacity(0.7),
+                                        color: textColor.withValues(alpha: 0.7),
                                         fontSize: 14,
                                         fontWeight: FontWeight.w400,
                                       ),
@@ -702,7 +710,7 @@ class _WorkoutTimerPageState extends State<WorkoutTimerPage>
                             color: cardBackgroundColor,
                             borderRadius: BorderRadius.circular(12),
                             border: Border.all(
-                              color: textColor.withOpacity(0.2),
+                              color: textColor.withValues(alpha: 0.2),
                               width: 1,
                             ),
                           ),
@@ -713,7 +721,7 @@ class _WorkoutTimerPageState extends State<WorkoutTimerPage>
                               Text(
                                 l10n.rest,
                                 style: TextStyle(
-                                  color: textColor.withOpacity(0.7),
+                                  color: textColor.withValues(alpha: 0.7),
                                   fontSize: 12,
                                   fontWeight: FontWeight.w400,
                                 ),
@@ -741,7 +749,7 @@ class _WorkoutTimerPageState extends State<WorkoutTimerPage>
                                     child: Text(
                                       l10n.min,
                                       style: TextStyle(
-                                        color: textColor.withOpacity(0.7),
+                                        color: textColor.withValues(alpha: 0.7),
                                         fontSize: 14,
                                         fontWeight: FontWeight.w400,
                                       ),

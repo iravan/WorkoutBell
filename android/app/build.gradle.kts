@@ -40,6 +40,10 @@ android {
         // versionCode is the build number (1), versionName is the version (1.0.0)
         versionCode = appVersionCode
         versionName = appVersionName
+        
+        // 16 KB page size support for Android 15+ (required starting November 1, 2025)
+        // Android Gradle Plugin 8.5.1+ automatically handles 16 KB alignment for native libraries
+        // The android:pageSizeCompat attribute is set in AndroidManifest.xml
     }
 
     buildTypes {

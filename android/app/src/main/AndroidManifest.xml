@@ -4,7 +4,8 @@
     <application
         android:label="workout_timer"
         android:name="${applicationName}"
-        android:icon="@mipmap/ic_launcher">
+        android:icon="@mipmap/ic_launcher"
+        android:pageSizeCompat="enabled">
         <activity
             android:name=".MainActivity"
             android:exported="true"
