@@ -50,3 +50,6 @@ web
 macos
 # Android root build artifacts
 android/build/
+
+# graphify knowledge graph (generated)
+graphify-out/
