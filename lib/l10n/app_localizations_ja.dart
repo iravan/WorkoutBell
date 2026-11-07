@@ -15,7 +15,7 @@ class AppLocalizationsJa extends AppLocalizations {
   String get round => 'ラウンド';
 
   @override
-  String get lessonStartTime => 'レッスン開始時間';
+  String get lessonStartTime => '開始';
 
   @override
   String get workout => 'ワークアウト';
@@ -28,4 +28,49 @@ class AppLocalizationsJa extends AppLocalizations {
 
   @override
   String get mins => '分';
+
+  @override
+  String get help => 'ヘルプ';
+
+  @override
+  String get helpTitle => '使い方';
+
+  @override
+  String get helpPlayPause => '再生 / 一時停止 — リング下のボタンで開始または一時停止します。';
+
+  @override
+  String get helpStop => '停止 — タップでリセット。1ラウンド以上完了後のみ確認します。';
+
+  @override
+  String get helpWorkout => 'ワークアウト — + / − で時間を変更（実行中は変更不可）。';
+
+  @override
+  String get helpRest => '休息 — + / − で時間を変更（実行中は変更不可）。';
+
+  @override
+  String get ready => '準備完了';
+
+  @override
+  String get confirmStopTitle => 'タイマーをリセットしますか？';
+
+  @override
+  String get confirmStopBody => '現在のラウンドと残り時間をクリアします。';
+
+  @override
+  String get cancel => 'キャンセル';
+
+  @override
+  String get reset => 'リセット';
+
+  @override
+  String get helpStartTime => '開始 — 長押しで時・分・秒を表示します。';
+
+  @override
+  String get helpRound => 'ラウンド — 完了したワークアウトと休息のサイクル数です。';
+
+  @override
+  String get helpColors => '緑のリング = ワークアウト。赤のリング = 休息。フェーズ終了時にベルが鳴ります。';
+
+  @override
+  String get helpGotIt => '閉じる';
 }

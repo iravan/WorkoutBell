@@ -2,10 +2,25 @@
   "@@locale": "ja",
   "appTitle": "ワークアウトタイマー",
   "round": "ラウンド",
-  "lessonStartTime": "レッスン開始時間",
+  "lessonStartTime": "開始",
   "workout": "ワークアウト",
   "rest": "休息",
   "min": "分",
-  "mins": "分"
+  "mins": "分",
+  "help": "ヘルプ",
+  "helpTitle": "使い方",
+  "helpPlayPause": "再生 / 一時停止 — リング下のボタンで開始または一時停止します。",
+  "helpStop": "停止 — タップでリセット。1ラウンド以上完了後のみ確認します。",
+  "helpWorkout": "ワークアウト — + / − で時間を変更（実行中は変更不可）。",
+  "helpRest": "休息 — + / − で時間を変更（実行中は変更不可）。",
+  "ready": "準備完了",
+  "confirmStopTitle": "タイマーをリセットしますか？",
+  "confirmStopBody": "現在のラウンドと残り時間をクリアします。",
+  "cancel": "キャンセル",
+  "reset": "リセット",
+  "helpStartTime": "開始 — 長押しで時・分・秒を表示します。",
+  "helpRound": "ラウンド — 完了したワークアウトと休息のサイクル数です。",
+  "helpColors": "緑のリング = ワークアウト。赤のリング = 休息。フェーズ終了時にベルが鳴ります。",
+  "helpGotIt": "閉じる"
 }
 

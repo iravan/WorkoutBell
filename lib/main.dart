@@ -100,8 +100,8 @@ class RoundedCircularProgressPainter extends CustomPainter {
       ..style = PaintingStyle.stroke
       ..strokeCap = StrokeCap.round;
 
-    // Draw the arc
-    final sweepAngle = 2 * math.pi * progress;
+    // Negative sweep = clockwise from 12 o'clock (Flutter arcs are CCW by default)
+    final sweepAngle = -2 * math.pi * progress;
     canvas.drawArc(
       Rect.fromCircle(center: center, radius: radius),
       startAngle,
@@ -300,19 +300,202 @@ class _WorkoutTimerPageState extends State<WorkoutTimerPage>
     }
   }
 
-  (int, int) _shiftCountDownList(int index, List<double> list) {
-    int returnIndex = index + 1;
-    if (returnIndex >= list.length) {
-      returnIndex = 0;
-    }
-    return (returnIndex, (list[returnIndex] * 60).toInt());
+  (int, int) _shiftCountDownList(int index, List<double> list, {int delta = 1}) {
+    final returnIndex = (index + delta) % list.length;
+    final safeIndex = returnIndex < 0 ? returnIndex + list.length : returnIndex;
+    return (safeIndex, (list[safeIndex] * 60).toInt());
   }
+
+  void _nudgeDuration({required bool workout, required int delta}) {
+    if (isRunning) return;
+    if (workout) {
+      countDownFromIndex = _shiftCountDownList(
+        countDownFromIndex,
+        workoutTimeMinutesList,
+        delta: delta,
+      ).$1;
+    } else {
+      restTimeFromIndex = _shiftCountDownList(
+        restTimeFromIndex,
+        restTimeMinutesList,
+        delta: delta,
+      ).$1;
+    }
+    _resetAll();
+  }
+
+  bool get _canReset =>
+      isRunning ||
+      round > 0 ||
+      timeRemaining != countDownFrom ||
+      restTimeRemaining != restTimeFrom;
 
   String _restTimeString(double restTime) {
     if (restTime < 1) {
       return restTime.toStringAsFixed(1);
     }
     return restTime.toInt().toString();
+  }
+
+  String _phaseLabel(AppLocalizations l10n) {
+    if (!isRunning &&
+        timeRemaining == countDownFrom &&
+        restTimeRemaining == restTimeFrom &&
+        round == 0) {
+      return l10n.ready;
+    }
+    if (timeRemaining > 0) return l10n.workout;
+    if (restTimeRemaining > 0) return l10n.rest;
+    return l10n.ready;
+  }
+
+  Color get _phaseTextColor {
+    if (timeRemaining > 0 && (isRunning || round > 0 || timeRemaining != countDownFrom)) {
+      return const Color.fromRGBO(0, 170, 80, 1.0);
+    }
+    if (timeRemaining == 0 && restTimeRemaining > 0) {
+      return const Color.fromRGBO(220, 70, 70, 1.0);
+    }
+    return textColor.withValues(alpha: 0.75);
+  }
+
+  Future<void> _onStopPressed(BuildContext context, AppLocalizations l10n) async {
+    if (!_canReset) return;
+    // Confirm only after progress matters (completed rounds).
+    if (round == 0) {
+      _stopTimer();
+      return;
+    }
+    final shouldReset = await showDialog<bool>(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: Text(l10n.confirmStopTitle),
+        content: Text(l10n.confirmStopBody),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(context, false),
+            child: Text(l10n.cancel),
+          ),
+          TextButton(
+            onPressed: () => Navigator.pop(context, true),
+            child: Text(l10n.reset),
+          ),
+        ],
+      ),
+    );
+    if (shouldReset == true) _stopTimer();
+  }
+
+  Widget _durationCard({
+    required String label,
+    required String value,
+    required bool enabled,
+    required VoidCallback onDecrease,
+    required VoidCallback onIncrease,
+  }) {
+    final buttonColor = textColor.withValues(alpha: enabled ? 1 : 0.35);
+    return Container(
+      padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 4),
+      decoration: BoxDecoration(
+        color: cardBackgroundColor,
+        borderRadius: BorderRadius.circular(12),
+        border: Border.all(
+          color: textColor.withValues(alpha: 0.2),
+          width: 1,
+        ),
+      ),
+      child: Row(
+        children: [
+          IconButton(
+            onPressed: enabled ? onDecrease : null,
+            icon: Icon(Icons.remove, color: buttonColor),
+          ),
+          Expanded(
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Text(
+                  label,
+                  style: TextStyle(
+                    color: textColor.withValues(alpha: 0.7),
+                    fontSize: 12,
+                    fontWeight: FontWeight.w500,
+                  ),
+                ),
+                const SizedBox(height: 2),
+                Text.rich(
+                  TextSpan(
+                    children: [
+                      TextSpan(
+                        text: value,
+                        style: TextStyle(
+                          color: textColor,
+                          fontSize: 24,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      TextSpan(
+                        text: ' ${AppLocalizations.of(context)!.min}',
+                        style: TextStyle(
+                          color: textColor.withValues(alpha: 0.7),
+                          fontSize: 14,
+                          fontWeight: FontWeight.w400,
+                        ),
+                      ),
+                    ],
+                  ),
+                  textAlign: TextAlign.center,
+                ),
+              ],
+            ),
+          ),
+          IconButton(
+            onPressed: enabled ? onIncrease : null,
+            icon: Icon(Icons.add, color: buttonColor),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _controlButton({
+    required IconData icon,
+    required VoidCallback? onTap,
+    required double size,
+    required double iconSize,
+    bool primary = false,
+  }) {
+    final enabled = onTap != null;
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+    final fill = isDark ? const Color(0xFFE8E8E8) : const Color(0xFF2C2C2C);
+    final iconColor = primary
+        ? (isDark ? const Color(0xFF121212) : Colors.white)
+        : textColor.withValues(alpha: enabled ? 0.85 : 0.35);
+    return Material(
+      color: Colors.transparent,
+      child: InkWell(
+        onTap: onTap,
+        borderRadius: BorderRadius.circular(size / 2),
+        child: Opacity(
+          opacity: enabled || primary ? 1 : 0.45,
+          child: Container(
+            width: size,
+            height: size,
+            decoration: BoxDecoration(
+              color: primary ? fill : Colors.transparent,
+              shape: BoxShape.circle,
+              border: primary
+                  ? null
+                  : Border.all(
+                      color: textColor.withValues(alpha: 0.35),
+                      width: 1.5,
+                    ),
+            ),
+            child: Icon(icon, color: iconColor, size: iconSize),
+          ),
+        ),
+      ),
+    );
   }
 
   Future<void> _playSound() async {
@@ -414,6 +597,34 @@ class _WorkoutTimerPageState extends State<WorkoutTimerPage>
     super.dispose();
   }
 
+  void _showHelpDialog(BuildContext context, AppLocalizations l10n) {
+    showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: Text(l10n.helpTitle),
+        content: SingleChildScrollView(
+          child: Text(
+            [
+              l10n.helpPlayPause,
+              l10n.helpStop,
+              l10n.helpWorkout,
+              l10n.helpRest,
+              l10n.helpStartTime,
+              l10n.helpRound,
+              l10n.helpColors,
+            ].join('\n\n'),
+          ),
+        ),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(context),
+            child: Text(l10n.helpGotIt),
+          ),
+        ],
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
@@ -425,31 +636,33 @@ class _WorkoutTimerPageState extends State<WorkoutTimerPage>
           padding: const EdgeInsets.all(16.0),
           child: Column(
             children: [
-              // Round counter and Start time display
+              // Round counter, start time, and help
               Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   // Round counter
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        l10n.round,
-                        style: TextStyle(
-                          color: textColor,
-                          fontSize: 16,
-                          fontWeight: FontWeight.w300,
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          l10n.round,
+                          style: TextStyle(
+                            color: textColor,
+                            fontSize: 16,
+                            fontWeight: FontWeight.w300,
+                          ),
                         ),
-                      ),
-                      Text(
-                        "$round",
-                        style: TextStyle(
-                          color: textColor,
-                          fontSize: 34,
-                          fontWeight: FontWeight.bold,
+                        Text(
+                          round == 0 ? "–" : "$round",
+                          style: TextStyle(
+                            color: textColor,
+                            fontSize: 34,
+                            fontWeight: FontWeight.bold,
+                          ),
                         ),
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
                   // Start time display
                   GestureDetector(
@@ -483,284 +696,124 @@ class _WorkoutTimerPageState extends State<WorkoutTimerPage>
                       ],
                     ),
                   ),
+                  IconButton(
+                    tooltip: l10n.help,
+                    onPressed: () => _showHelpDialog(context, l10n),
+                    icon: Icon(Icons.help_outline, color: textColor),
+                  ),
                 ],
               ),
 
               const Spacer(),
 
-              // Countdown timer text
-              Text(
-                timeRemainingText,
-                style: TextStyle(
-                  color: textColor,
-                  fontSize: 48,
-                  fontWeight: FontWeight.bold,
-                ),
-                textAlign: TextAlign.center,
-              ),
-
-              const Spacer(),
-
-              // Circular progress with control buttons
+              // Ring = status; controls sit underneath
               SizedBox(
                 width: 300,
                 height: 300,
                 child: Stack(
                   alignment: Alignment.center,
                   children: [
-                    // Background circle
-                    SizedBox(
-                      width: 300,
-                      height: 300,
-                      child: CustomPaint(
-                        painter: RoundedCircularProgressPainter(
-                          progress: 1.0,
-                          strokeWidth: 30,
-                          color: backgroundColor,
-                          startAngle:
-                              -math.pi / 2, // -90 degrees (rotated left)
-                          outerRadius:
-                              150.0, // Use full radius to extend outward
-                        ),
+                    CustomPaint(
+                      size: const Size(300, 300),
+                      painter: RoundedCircularProgressPainter(
+                        progress: 1.0,
+                        strokeWidth: 30,
+                        color: backgroundColor,
+                        startAngle: -math.pi / 2,
+                        outerRadius: 150.0,
                       ),
                     ),
-                    // Progress circle
-                    SizedBox(
-                      width: 300,
-                      height: 300,
-                      child: CustomPaint(
-                        painter: RoundedCircularProgressPainter(
-                          progress: _ringTrimTo(),
-                          strokeWidth: 25,
-                          color: circleColor,
-                          startAngle:
-                              -math.pi / 2, // -90 degrees (rotated left)
-                          outerRadius:
-                              147.5, // Centered within background (150 - 15 + 12.5)
-                        ),
+                    CustomPaint(
+                      size: const Size(300, 300),
+                      painter: RoundedCircularProgressPainter(
+                        progress: _ringTrimTo(),
+                        strokeWidth: 25,
+                        color: circleColor,
+                        startAngle: -math.pi / 2,
+                        outerRadius: 147.5,
                       ),
                     ),
-                    // Control buttons in center
                     Column(
                       mainAxisSize: MainAxisSize.min,
-                      mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        // Play/Pause button - centered
-                        Material(
-                          color: Colors.transparent,
-                          child: InkWell(
-                            onTap: _toggleRun,
-                            borderRadius: BorderRadius.circular(50),
-                            child: Container(
-                              width: 80,
-                              height: 80,
-                              decoration: BoxDecoration(
-                                color: buttonBackgroundColor,
-                                shape: BoxShape.circle,
-                                border: Border.all(
-                                  color: textColor.withValues(alpha: 0.3),
-                                  width: 1,
-                                ),
-                              ),
-                              child: Icon(
-                                isRunning ? Icons.pause : Icons.play_arrow,
-                                color: textColor,
-                                size: 40,
-                              ),
-                            ),
+                        Text(
+                          _phaseLabel(l10n).toUpperCase(),
+                          style: TextStyle(
+                            color: _phaseTextColor,
+                            fontSize: 13,
+                            fontWeight: FontWeight.w700,
+                            letterSpacing: 1.6,
                           ),
                         ),
-                        // Stop button (only visible when running) - positioned below
-                        if (isRunning) ...[
-                          const SizedBox(height: 16),
-                          Material(
-                            color: Colors.transparent,
-                            child: InkWell(
-                              onTap: _stopTimer,
-                              borderRadius: BorderRadius.circular(25),
-                              child: Container(
-                                width: 50,
-                                height: 50,
-                                decoration: BoxDecoration(
-                                  color: buttonBackgroundColor,
-                                  shape: BoxShape.circle,
-                                  border: Border.all(
-                                    color: textColor.withValues(alpha: 0.3),
-                                    width: 1,
-                                  ),
-                                ),
-                                child: Icon(
-                                  Icons.stop,
-                                  color: textColor,
-                                  size: 24,
-                                ),
-                              ),
-                            ),
+                        const SizedBox(height: 6),
+                        Text(
+                          timeRemainingText,
+                          style: TextStyle(
+                            color: textColor,
+                            fontSize: 64,
+                            fontWeight: FontWeight.bold,
+                            height: 1.0,
                           ),
-                        ],
+                          textAlign: TextAlign.center,
+                        ),
                       ],
                     ),
                   ],
                 ),
               ),
 
+              const SizedBox(height: 28),
+
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  _controlButton(
+                    icon: isRunning ? Icons.pause : Icons.play_arrow,
+                    onTap: _toggleRun,
+                    size: 76,
+                    iconSize: 38,
+                    primary: true,
+                  ),
+                  const SizedBox(width: 28),
+                  _controlButton(
+                    icon: Icons.stop,
+                    onTap: _canReset
+                        ? () => _onStopPressed(context, l10n)
+                        : null,
+                    size: 56,
+                    iconSize: 26,
+                  ),
+                ],
+              ),
+
               const Spacer(),
 
-              // Workout and Rest time controls
               Row(
                 children: [
                   Expanded(
-                    child: Material(
-                      color: Colors.transparent,
-                      child: InkWell(
-                        onTap: () {
-                          final result = _shiftCountDownList(
-                            countDownFromIndex,
-                            workoutTimeMinutesList,
-                          );
-                          setState(() {
-                            countDownFromIndex = result.$1;
-                            countDownFrom = result.$2;
-                          });
-                          _resetAll();
-                        },
-                        borderRadius: BorderRadius.circular(12),
-                        child: Container(
-                          padding: const EdgeInsets.symmetric(
-                            vertical: 16,
-                            horizontal: 12,
-                          ),
-                          decoration: BoxDecoration(
-                            color: cardBackgroundColor,
-                            borderRadius: BorderRadius.circular(12),
-                            border: Border.all(
-                              color: textColor.withValues(alpha: 0.2),
-                              width: 1,
-                            ),
-                          ),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            mainAxisSize: MainAxisSize.min,
-                            children: [
-                              Text(
-                                l10n.workout,
-                                style: TextStyle(
-                                  color: textColor.withValues(alpha: 0.7),
-                                  fontSize: 12,
-                                  fontWeight: FontWeight.w400,
-                                ),
-                              ),
-                              const SizedBox(height: 4),
-                              Row(
-                                crossAxisAlignment: CrossAxisAlignment.end,
-                                children: [
-                                  Text(
-                                    "${workoutTimeMinutesList[countDownFromIndex].toInt()}",
-                                    style: TextStyle(
-                                      color: textColor,
-                                      fontSize: 24,
-                                      fontWeight: FontWeight.bold,
-                                    ),
-                                  ),
-                                  Padding(
-                                    padding: const EdgeInsets.only(
-                                      bottom: 4,
-                                      left: 4,
-                                    ),
-                                    child: Text(
-                                      l10n.min,
-                                      style: TextStyle(
-                                        color: textColor.withValues(alpha: 0.7),
-                                        fontSize: 14,
-                                        fontWeight: FontWeight.w400,
-                                      ),
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
+                    child: _durationCard(
+                      label: l10n.workout,
+                      value:
+                          "${workoutTimeMinutesList[countDownFromIndex].toInt()}",
+                      enabled: !isRunning,
+                      onDecrease: () =>
+                          _nudgeDuration(workout: true, delta: -1),
+                      onIncrease: () =>
+                          _nudgeDuration(workout: true, delta: 1),
                     ),
                   ),
                   const SizedBox(width: 12),
                   Expanded(
-                    child: Material(
-                      color: Colors.transparent,
-                      child: InkWell(
-                        onTap: () {
-                          final result = _shiftCountDownList(
-                            restTimeFromIndex,
-                            restTimeMinutesList,
-                          );
-                          setState(() {
-                            restTimeFromIndex = result.$1;
-                            restTimeFrom = result.$2;
-                          });
-                          _resetAll();
-                        },
-                        borderRadius: BorderRadius.circular(12),
-                        child: Container(
-                          padding: const EdgeInsets.symmetric(
-                            vertical: 16,
-                            horizontal: 12,
-                          ),
-                          decoration: BoxDecoration(
-                            color: cardBackgroundColor,
-                            borderRadius: BorderRadius.circular(12),
-                            border: Border.all(
-                              color: textColor.withValues(alpha: 0.2),
-                              width: 1,
-                            ),
-                          ),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.end,
-                            mainAxisSize: MainAxisSize.min,
-                            children: [
-                              Text(
-                                l10n.rest,
-                                style: TextStyle(
-                                  color: textColor.withValues(alpha: 0.7),
-                                  fontSize: 12,
-                                  fontWeight: FontWeight.w400,
-                                ),
-                              ),
-                              const SizedBox(height: 4),
-                              Row(
-                                mainAxisAlignment: MainAxisAlignment.end,
-                                crossAxisAlignment: CrossAxisAlignment.end,
-                                children: [
-                                  Text(
-                                    _restTimeString(
-                                      restTimeMinutesList[restTimeFromIndex],
-                                    ),
-                                    style: TextStyle(
-                                      color: textColor,
-                                      fontSize: 24,
-                                      fontWeight: FontWeight.bold,
-                                    ),
-                                  ),
-                                  Padding(
-                                    padding: const EdgeInsets.only(
-                                      bottom: 4,
-                                      left: 4,
-                                    ),
-                                    child: Text(
-                                      l10n.min,
-                                      style: TextStyle(
-                                        color: textColor.withValues(alpha: 0.7),
-                                        fontSize: 14,
-                                        fontWeight: FontWeight.w400,
-                                      ),
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ],
-                          ),
-                        ),
+                    child: _durationCard(
+                      label: l10n.rest,
+                      value: _restTimeString(
+                        restTimeMinutesList[restTimeFromIndex],
                       ),
+                      enabled: !isRunning,
+                      onDecrease: () =>
+                          _nudgeDuration(workout: false, delta: -1),
+                      onIncrease: () =>
+                          _nudgeDuration(workout: false, delta: 1),
                     ),
                   ),
                 ],

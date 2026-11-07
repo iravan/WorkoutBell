@@ -2,10 +2,25 @@
   "@@locale": "es",
   "appTitle": "Temporizador de Entrenamiento",
   "round": "Ronda",
-  "lessonStartTime": "Hora de Inicio de la Lección",
+  "lessonStartTime": "Inicio",
   "workout": "Entrenamiento",
   "rest": "Descanso",
   "min": "min",
-  "mins": "min(s)"
+  "mins": "min(s)",
+  "help": "Ayuda",
+  "helpTitle": "Cómo usar",
+  "helpPlayPause": "Reproducir / Pausar — toca el botón bajo el anillo para iniciar o pausar.",
+  "helpStop": "Detener — toca para reiniciar. Solo pide confirmación tras completar al menos una ronda.",
+  "helpWorkout": "Entrenamiento — usa + / − para cambiar la duración (desactivado al correr).",
+  "helpRest": "Descanso — usa + / − para cambiar la duración (desactivado al correr).",
+  "ready": "Listo",
+  "confirmStopTitle": "¿Reiniciar temporizador?",
+  "confirmStopBody": "Se borrará la ronda actual y el tiempo restante.",
+  "cancel": "Cancelar",
+  "reset": "Reiniciar",
+  "helpStartTime": "Inicio — mantén pulsado para mostrar horas, minutos y segundos.",
+  "helpRound": "Ronda — cuenta los ciclos de entrenamiento y descanso completados.",
+  "helpColors": "Anillo verde = entrenamiento. Anillo rojo = descanso. Suena una campana al terminar una fase.",
+  "helpGotIt": "Entendido"
 }
 

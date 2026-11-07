@@ -2,10 +2,25 @@
   "@@locale": "fr",
   "appTitle": "Minuteur d'Entraînement",
   "round": "Tour",
-  "lessonStartTime": "Heure de Début de la Leçon",
+  "lessonStartTime": "Début",
   "workout": "Entraînement",
   "rest": "Repos",
   "min": "min",
-  "mins": "min(s)"
+  "mins": "min(s)",
+  "help": "Aide",
+  "helpTitle": "Mode d'emploi",
+  "helpPlayPause": "Lecture / Pause — appuyez sur le bouton sous l'anneau pour démarrer ou mettre en pause.",
+  "helpStop": "Arrêt — appuyez pour réinitialiser. Confirmation seulement après au moins un tour.",
+  "helpWorkout": "Entraînement — utilisez + / − pour changer la durée (désactivé en cours).",
+  "helpRest": "Repos — utilisez + / − pour changer la durée (désactivé en cours).",
+  "ready": "Prêt",
+  "confirmStopTitle": "Réinitialiser le minuteur ?",
+  "confirmStopBody": "Cela efface le tour actuel et le temps restant.",
+  "cancel": "Annuler",
+  "reset": "Réinitialiser",
+  "helpStartTime": "Début — appui long pour afficher heures, minutes et secondes.",
+  "helpRound": "Tour — compte les cycles d'entraînement et de repos terminés.",
+  "helpColors": "Anneau vert = entraînement. Anneau rouge = repos. Une cloche sonne à la fin d'une phase.",
+  "helpGotIt": "Compris"
 }
 

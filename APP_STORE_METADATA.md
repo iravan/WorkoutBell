@@ -1,159 +1,95 @@
-# App Store Metadata for Workout Timer
+# App Store Metadata — WorkoutBell
+
+## Positioning
+
+| | |
+|---|---|
+| **Name** | WorkoutBell |
+| **Promise** | Glanceable interval timing with a clear phase bell |
+| **Audience** | HIIT / boxing / circuit athletes + class instructors |
+| **Differentiators** | Bell cue, color ring, round + session start time, no ads/accounts, 7 locales |
+| **Category** | Health & Fitness (primary), Sports (secondary) |
+| **Age** | 4+ |
+| **Marketing URL** | https://iravan.github.io/workout_timer/ |
+| **Support URL** | https://github.com/iravan/workout_timer/issues |
+| **Privacy URL** | https://github.com/iravan/workout_timer/blob/main/PRIVACY.md |
+
+---
 
 ## App Name
-**Workout Timer**
+**WorkoutBell**
 
 ## Subtitle (30 characters max)
-Interval Training Timer & Counter
+`HIIT & Boxing Interval Timer`  
+(28 characters)
 
 ## Keywords (100 characters max)
-workout,timer,interval,training,exercise,fitness,HIIT,boxing,rest,round,counter,gym,cardio,strength
+`workout timer,interval,HIIT,boxing,rest,round,gym,circuit,tabata,fitness,training,exercise,bell`
 
-## Description (4000 characters max)
+## Promotional Text (170 characters max)
+Hear the bell when work or rest ends. Big countdown, color ring, and round tracking for HIIT, boxing, and circuits. No ads. No account.
 
-Transform your workout sessions with Workout Timer, the ultimate interval training companion designed for athletes, fitness enthusiasts, and anyone serious about their training routine.
+## Description
 
-KEY FEATURES:
+Hear the bell. Hit the next round.
 
-Customizable Interval Training
-- Set workout periods from 1 to 30 minutes
-- Configure rest periods from 30 seconds to 10 minutes
-- Perfect for HIIT, boxing, circuit training, and more
+WorkoutBell is a simple interval timer for HIIT, boxing, circuits, and class rounds. Big countdown, color-coded ring, automatic rounds, and a clear sound when the phase changes — so you can train without staring at your phone.
 
-Visual Progress Indicator
-- Beautiful circular progress ring that changes color
-- Green during workout periods
-- Red during rest periods
-- Gray when paused
-- At-a-glance time remaining display
-- Large, easy-to-read countdown timer
+KEY FEATURES
 
-Round Tracking
-- Automatic round counter tracks your workout cycles
-- Lesson start time display
-- Long press time display to show seconds
+Interval timing
+- Workout: 1 to 30 minutes
+- Rest: 30 seconds to 10 minutes
+- Built for HIIT, boxing, circuits, and strength rest periods
 
-Smart Notifications
-- Boxing bell sound alerts when periods end
-- Works even when app is in background
-- Audio continues playing when device is locked
+Glanceable display
+- Large countdown you can read from the floor
+- Green ring for workout, red for rest
+- Phase label so color is never the only cue
 
-Dark Mode Support
-- Beautiful dark theme for low-light environments
-- Automatically adapts to your device settings
-- Easy on the eyes during evening workouts
+Round and session tracking
+- Automatic round counter
+- Session start time for classes and coaching
 
-Multi-Language Support
-- Available in English, Spanish, French, Japanese, and Chinese (Simplified and Traditional)
-- Fully localized interface
+Clear alerts
+- Boxing-style bell when a phase ends
+- Continues with background audio support
+- Screen stays awake while you train
 
-Persistent Settings
-- Your workout and rest time preferences are saved
-- Quick access to your favorite intervals
+Simple by design
+- No account, no ads, no subscription
+- Preferences saved on your device
+- Light and dark mode follow your system
+- English, Spanish, French, Japanese, Chinese (Simplified and Traditional)
 
-PERFECT FOR:
-- High-Intensity Interval Training (HIIT)
-- Boxing and martial arts training
-- Circuit training sessions
-- Tabata workouts
-- Strength training rest periods
-- Cardio interval training
-- Group fitness classes
-- Personal training sessions
+PERFECT FOR
+- HIIT and Tabata-style sessions
+- Boxing and martial arts rounds
+- Circuit training
+- Strength rest timers
+- Group fitness and personal training
 
-WHY CHOOSE WORKOUT TIMER:
-- Simple, intuitive interface - no complicated setup
-- Large, clear display - easy to see while exercising
-- Background audio support - timer continues even when app is minimized
-- No ads, no subscriptions - just pure functionality
-- Lightweight and fast - won't slow down your device
-- Works offline - no internet connection required
-
-Start your next workout with confidence. Download Workout Timer today and take your training to the next level!
+Download WorkoutBell and keep your intervals honest.
 
 ---
 
-## Promotional Text (170 characters max - Optional)
-New: Dark mode support! Perfect for evening workouts. Background audio now works seamlessly. Multi-language support including Traditional Chinese for Hong Kong users.
+## What's New (current)
 
-NOTE: App Store Connect does not allow emojis or special Unicode characters in the description field. Use plain text with hyphens (-) for bullet points instead of bullets (•) or checkmarks (✓).
-
-## What's New (Version 1.0.0)
-• Initial release
-• Customizable workout and rest intervals
-• Visual circular progress indicator
-• Round counter and start time tracking
-• Sound notifications with background audio support
-• Dark mode support
-• Multi-language localization (English, Spanish, French, Japanese, Chinese)
-
-## App Category
-**Primary:** Health & Fitness
-**Secondary:** Sports
-
-## Age Rating
-**4+** (No objectionable content)
-
-## Privacy Policy URL
-[Your privacy policy URL here]
-
-## Support URL
-[Your support URL here]
-
-## Marketing URL (Optional)
-[Your marketing website URL here]
+Help on every control. Clearer play/stop hierarchy. Safer reset. Clockwise progress ring. Localization and dark mode polish.
 
 ---
 
-## App Store Screenshots Guidelines
+## Screenshot brief (shoot in this order)
 
-### iPhone Screenshots Needed:
-- 6.7" Display (iPhone 14 Pro Max, 15 Pro Max): 1290 x 2796 pixels
-- 6.5" Display (iPhone 11 Pro Max, XS Max): 1242 x 2688 pixels
-- 5.5" Display (iPhone 8 Plus): 1242 x 2208 pixels
+1. **Hero** — Ready state, big time in ring, Play prominent (light)
+2. **Workout live** — Green ring + Workout label mid-countdown
+3. **Rest live** — Red ring + Rest label
+4. **Dark mode** — Same hero in dark
+5. **Setup** — Workout/Rest steppers visible (+ / −)
 
-### iPad Screenshots Needed:
-- 12.9" iPad Pro (3rd gen): 2048 x 2732 pixels
-- 11" iPad Pro: 1668 x 2388 pixels
-
-### Recommended Screenshot Content:
-1. **Main Timer Screen** - Show the circular progress indicator with workout time
-2. **Rest Period** - Show the red progress indicator during rest
-3. **Settings View** - Show workout/rest time selection
-4. **Dark Mode** - Show the app in dark mode
-5. **Round Counter** - Highlight the round tracking feature
-
----
-
-## App Store Optimization (ASO) Tips
-
-### Keyword Optimization:
-- Include primary keywords: "workout timer", "interval timer", "HIIT timer"
-- Use long-tail keywords: "boxing timer", "circuit training timer"
-- Include competitor terms: "tabata timer", "exercise timer"
-
-### Description Optimization:
-- Front-load important features in first 3 lines (visible without "more")
-- Use emojis sparingly for visual appeal
-- Include social proof elements
-- Use bullet points for easy scanning
-- Include call-to-action at the end
-
-### Screenshot Strategy:
-- First screenshot should show the main timer interface
-- Highlight unique features (circular progress, color changes)
-- Show dark mode as it's a differentiating feature
-- Include text overlays explaining key features
-
----
-
-## Additional Notes
-
-- Make sure to update version numbers in `pubspec.yaml` before each release
-- Test the app thoroughly on different iOS devices
-- Ensure all localized strings are correct
-- Verify background audio works correctly
-- Test dark mode on actual devices
-- Prepare app screenshots showing key features
-- Write a privacy policy if collecting any user data (currently app doesn't collect data, but App Store may require one)
-
+Overlay lines (optional):
+1. "Train. Rest. Hear the bell."
+2. "Green = work. Red = rest."
+3. "Rounds tracked automatically."
+4. "Easy on the eyes at night."
+5. "Set intervals in one tap."

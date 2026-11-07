@@ -1,48 +1,65 @@
-# Workout Timer
+# WorkoutBell
 
-A Flutter workout timer app that alternates between workout and rest periods.
+**Train. Rest. Hear the bell.**
 
-## Live demo
+A glanceable interval timer for HIIT, boxing, circuits, and class rounds — big countdown, color ring, round counter, and a clear bell when the phase changes.
 
-[Open WorkoutBell on GitHub Pages](https://iravan.github.io/workout_timer/)
+**[Open free web app →](https://iravan.github.io/workout_timer/)**
 
 ## Screenshots
 
 | Light mode | Dark mode |
 |:---:|:---:|
-| <img src="docs/screenshots/01-main-timer.png" width="280" alt="Main timer (light mode)"> | <img src="docs/screenshots/02-dark-mode.png" width="280" alt="Main timer (dark mode)"> |
+| <img src="docs/screenshots/01-main-timer.png" width="280" alt="WorkoutBell timer in light mode"> | <img src="docs/screenshots/02-dark-mode.png" width="280" alt="WorkoutBell timer in dark mode"> |
+
+## Why WorkoutBell
+
+- **Built for the gym floor** — large time, green = work / red = rest, readable from a few steps away
+- **Boxing-style cue** — bell sound when a phase ends (haptic fallback if needed)
+- **Rounds that matter** — automatic round count for classes and circuits
+- **No friction** — no account, no ads, no subscription; preferences saved on device
+- **Ready worldwide** — English, Spanish, French, Japanese, Chinese (Simplified + Traditional)
 
 ## Features
 
-- Configurable workout time (1, 2, 3, 4, 5, 10, 15, 30 minutes)
-- Configurable rest time (0.5, 1, 2, 3, 4, 5, 10 minutes)
-- Visual circular progress indicator
-- Round counter
-- Tap to start/pause timer
-- Long press to reset timer
-- Sound notification when timer reaches zero
-- Persists workout/rest time preferences
-- Light and dark mode (follows system)
+- Workout intervals: 1–30 minutes
+- Rest intervals: 30 seconds–10 minutes
+- Circular progress ring (clockwise)
+- Start / pause / reset with confirmation when it matters
+- Session start time (long-press for seconds)
+- System light & dark mode
+- Screen stays awake during training
+- Works offline on device; free browser demo on GitHub Pages
 
-## Setup
+## Perfect for
 
-1. Install dependencies:
-   ```bash
-   flutter pub get
-   ```
-
-2. Add sound file:
-   - Place a `boxingbell.mp3` file in the `assets/sounds/` directory
-   - The app will use haptic feedback as a fallback if the sound file is not found
-
-3. Run the app:
-   ```bash
-   flutter run
-   ```
+HIIT · Boxing / martial arts · Circuit training · Strength rest timers · Group classes · Personal training
 
 ## Usage
 
-- **Tap the circle** to start/pause the timer
-- **Long press the circle** to reset the timer
-- **Tap workout/rest time labels** to cycle through available durations
-- **Long press the time display** at the top to show seconds
+- **Play / Pause** — start or pause under the ring
+- **Stop** — reset the timer (asks to confirm after you have rounds)
+- **+ / −** — set workout and rest durations (locked while running)
+- **?** — help with every control
+- **Started** — long-press to show hours:minutes:seconds
+
+## Platforms
+
+Flutter app for **iOS** and **Android**, plus a **web demo**:  
+https://iravan.github.io/workout_timer/
+
+## Run locally
+
+```bash
+flutter pub get
+flutter run
+```
+
+## Privacy
+
+WorkoutBell does not collect personal data. Preferences stay on your device.  
+See [Privacy Policy](PRIVACY.md).
+
+## License
+
+Personal / portfolio project. See repository for details.

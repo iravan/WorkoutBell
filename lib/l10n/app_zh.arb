@@ -2,10 +2,25 @@
   "@@locale": "zh",
   "appTitle": "锻炼计时器",
   "round": "轮次",
-  "lessonStartTime": "课程开始时间",
+  "lessonStartTime": "开始于",
   "workout": "锻炼",
   "rest": "休息",
   "min": "分钟",
-  "mins": "分钟"
+  "mins": "分钟",
+  "help": "帮助",
+  "helpTitle": "使用说明",
+  "helpPlayPause": "播放 / 暂停 — 点按圆环下方的播放按钮开始或暂停。",
+  "helpStop": "停止 — 点按即可重置。完成至少一轮后才会要求确认。",
+  "helpWorkout": "锻炼 — 用 + / − 调整锻炼时长（运行中不可改）。",
+  "helpRest": "休息 — 用 + / − 调整休息时长（运行中不可改）。",
+  "ready": "准备",
+  "confirmStopTitle": "重置计时？",
+  "confirmStopBody": "将清除当前轮次和剩余时间。",
+  "cancel": "取消",
+  "reset": "重置",
+  "helpStartTime": "开始于 — 长按显示时、分、秒。",
+  "helpRound": "轮次 — 统计已完成的锻炼与休息循环。",
+  "helpColors": "绿色圆环 = 锻炼。红色圆环 = 休息。阶段结束时会响起铃声。",
+  "helpGotIt": "知道了"
 }
 

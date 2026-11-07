@@ -109,7 +109,7 @@ abstract class AppLocalizations {
   /// The title of the application
   ///
   /// In en, this message translates to:
-  /// **'Workout Timer'**
+  /// **'WorkoutBell'**
   String get appTitle;
 
   /// Label for round counter
@@ -118,10 +118,10 @@ abstract class AppLocalizations {
   /// **'Round'**
   String get round;
 
-  /// Label for lesson start time
+  /// Label for session start time
   ///
   /// In en, this message translates to:
-  /// **'Lesson Start Time'**
+  /// **'Started'**
   String get lessonStartTime;
 
   /// Label for workout time
@@ -147,6 +147,96 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'min(s)'**
   String get mins;
+
+  /// Tooltip for the help button
+  ///
+  /// In en, this message translates to:
+  /// **'Help'**
+  String get help;
+
+  /// Title of the help dialog
+  ///
+  /// In en, this message translates to:
+  /// **'How to use'**
+  String get helpTitle;
+
+  /// Help text for play/pause
+  ///
+  /// In en, this message translates to:
+  /// **'Play / Pause — tap the play button under the ring to start or pause.'**
+  String get helpPlayPause;
+
+  /// Help text for stop
+  ///
+  /// In en, this message translates to:
+  /// **'Stop — tap to reset. Confirms only after you have completed at least one round.'**
+  String get helpStop;
+
+  /// Help text for workout control
+  ///
+  /// In en, this message translates to:
+  /// **'Workout — use + / − to change workout duration (disabled while running).'**
+  String get helpWorkout;
+
+  /// Help text for rest control
+  ///
+  /// In en, this message translates to:
+  /// **'Rest — use + / − to change rest duration (disabled while running).'**
+  String get helpRest;
+
+  /// Phase label when timer is idle at the start
+  ///
+  /// In en, this message translates to:
+  /// **'Ready'**
+  String get ready;
+
+  /// Title for stop confirmation dialog
+  ///
+  /// In en, this message translates to:
+  /// **'Reset timer?'**
+  String get confirmStopTitle;
+
+  /// Body for stop confirmation dialog
+  ///
+  /// In en, this message translates to:
+  /// **'This clears the current round and remaining time.'**
+  String get confirmStopBody;
+
+  /// Cancel button label
+  ///
+  /// In en, this message translates to:
+  /// **'Cancel'**
+  String get cancel;
+
+  /// Confirm reset button label
+  ///
+  /// In en, this message translates to:
+  /// **'Reset'**
+  String get reset;
+
+  /// Help text for start time
+  ///
+  /// In en, this message translates to:
+  /// **'Started — long-press to show hours, minutes, and seconds.'**
+  String get helpStartTime;
+
+  /// Help text for round counter
+  ///
+  /// In en, this message translates to:
+  /// **'Round — counts completed workout and rest cycles.'**
+  String get helpRound;
+
+  /// Help text for colors and sound
+  ///
+  /// In en, this message translates to:
+  /// **'Green ring = workout. Red ring = rest. A bell sounds when a phase ends.'**
+  String get helpColors;
+
+  /// Dismiss button for help dialog
+  ///
+  /// In en, this message translates to:
+  /// **'Got it'**
+  String get helpGotIt;
 }
 
 class _AppLocalizationsDelegate

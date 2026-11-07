@@ -1,6 +1,6 @@
 {
   "@@locale": "en",
-  "appTitle": "Workout Timer",
+  "appTitle": "WorkoutBell",
   "@appTitle": {
     "description": "The title of the application"
   },
@@ -8,9 +8,9 @@
   "@round": {
     "description": "Label for round counter"
   },
-  "lessonStartTime": "Lesson Start Time",
+  "lessonStartTime": "Started",
   "@lessonStartTime": {
-    "description": "Label for lesson start time"
+    "description": "Label for session start time"
   },
   "workout": "Workout",
   "@workout": {
@@ -27,6 +27,66 @@
   "mins": "min(s)",
   "@mins": {
     "description": "Abbreviation for minutes with plural"
+  },
+  "help": "Help",
+  "@help": {
+    "description": "Tooltip for the help button"
+  },
+  "helpTitle": "How to use",
+  "@helpTitle": {
+    "description": "Title of the help dialog"
+  },
+  "helpPlayPause": "Play / Pause — tap the play button under the ring to start or pause.",
+  "@helpPlayPause": {
+    "description": "Help text for play/pause"
+  },
+  "helpStop": "Stop — tap to reset. Confirms only after you have completed at least one round.",
+  "@helpStop": {
+    "description": "Help text for stop"
+  },
+  "helpWorkout": "Workout — use + / − to change workout duration (disabled while running).",
+  "@helpWorkout": {
+    "description": "Help text for workout control"
+  },
+  "helpRest": "Rest — use + / − to change rest duration (disabled while running).",
+  "@helpRest": {
+    "description": "Help text for rest control"
+  },
+  "ready": "Ready",
+  "@ready": {
+    "description": "Phase label when timer is idle at the start"
+  },
+  "confirmStopTitle": "Reset timer?",
+  "@confirmStopTitle": {
+    "description": "Title for stop confirmation dialog"
+  },
+  "confirmStopBody": "This clears the current round and remaining time.",
+  "@confirmStopBody": {
+    "description": "Body for stop confirmation dialog"
+  },
+  "cancel": "Cancel",
+  "@cancel": {
+    "description": "Cancel button label"
+  },
+  "reset": "Reset",
+  "@reset": {
+    "description": "Confirm reset button label"
+  },
+  "helpStartTime": "Started — long-press to show hours, minutes, and seconds.",
+  "@helpStartTime": {
+    "description": "Help text for start time"
+  },
+  "helpRound": "Round — counts completed workout and rest cycles.",
+  "@helpRound": {
+    "description": "Help text for round counter"
+  },
+  "helpColors": "Green ring = workout. Red ring = rest. A bell sounds when a phase ends.",
+  "@helpColors": {
+    "description": "Help text for colors and sound"
+  },
+  "helpGotIt": "Got it",
+  "@helpGotIt": {
+    "description": "Dismiss button for help dialog"
   }
 }
 

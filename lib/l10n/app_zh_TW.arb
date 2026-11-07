@@ -2,10 +2,25 @@
   "@@locale": "zh_TW",
   "appTitle": "鍛鍊計時器",
   "round": "輪次",
-  "lessonStartTime": "課程開始時間",
+  "lessonStartTime": "開始於",
   "workout": "鍛鍊",
   "rest": "休息",
   "min": "分鐘",
-  "mins": "分鐘"
+  "mins": "分鐘",
+  "help": "說明",
+  "helpTitle": "使用說明",
+  "helpPlayPause": "播放 / 暫停 — 點按圓環下方的播放按鈕開始或暫停。",
+  "helpStop": "停止 — 點按即可重置。完成至少一輪後才會要求確認。",
+  "helpWorkout": "鍛鍊 — 用 + / − 調整鍛鍊時長（執行中不可改）。",
+  "helpRest": "休息 — 用 + / − 調整休息時長（執行中不可改）。",
+  "ready": "準備",
+  "confirmStopTitle": "重設計時？",
+  "confirmStopBody": "將清除目前輪次與剩餘時間。",
+  "cancel": "取消",
+  "reset": "重置",
+  "helpStartTime": "開始於 — 長按顯示時、分、秒。",
+  "helpRound": "輪次 — 統計已完成的鍛鍊與休息循環。",
+  "helpColors": "綠色圓環 = 鍛鍊。紅色圓環 = 休息。階段結束時會響起鈴聲。",
+  "helpGotIt": "知道了"
 }
 
