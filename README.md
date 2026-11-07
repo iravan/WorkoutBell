@@ -2,6 +2,16 @@
 
 A Flutter workout timer app that alternates between workout and rest periods.
 
+## Live demo
+
+[Open WorkoutBell on GitHub Pages](https://iravan.github.io/workout_timer/)
+
+## Screenshots
+
+| Light mode | Dark mode |
+|:---:|:---:|
+| <img src="docs/screenshots/01-main-timer.png" width="280" alt="Main timer (light mode)"> | <img src="docs/screenshots/02-dark-mode.png" width="280" alt="Main timer (dark mode)"> |
+
 ## Features
 
 - Configurable workout time (1, 2, 3, 4, 5, 10, 15, 30 minutes)
@@ -12,6 +22,7 @@ A Flutter workout timer app that alternates between workout and rest periods.
 - Long press to reset timer
 - Sound notification when timer reaches zero
 - Persists workout/rest time preferences
+- Light and dark mode (follows system)
 
 ## Setup
 

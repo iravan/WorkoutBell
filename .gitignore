@@ -48,3 +48,5 @@ windows
 linux
 web
 macos
+# Android root build artifacts
+android/build/
