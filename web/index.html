@@ -55,6 +55,17 @@
   <link rel="canonical" href="https://iravan.github.io/WorkoutBell/">
 </head>
 <body>
-  <script src="flutter_bootstrap.js?v=CACHE_BUST" async></script>
+  <!-- Custom bootstrap: no service worker (avoids mobile reload loops). -->
+  <script>
+    {{flutter_js}}
+    {{flutter_build_config}}
+
+    _flutter.loader.load({
+      onEntrypointLoaded: async function(engineInitializer) {
+        const appRunner = await engineInitializer.initializeEngine();
+        await appRunner.runApp();
+      }
+    });
+  </script>
 </body>
 </html>

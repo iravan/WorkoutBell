@@ -87,6 +87,18 @@
   "helpGotIt": "Got it",
   "@helpGotIt": {
     "description": "Dismiss button for help dialog"
+  },
+  "seoDescription": "WorkoutBell — train, rest, hear the bell. Free HIIT and boxing interval timer with rounds, color ring, and clear alerts. No ads. No account.",
+  "@seoDescription": {
+    "description": "HTML meta description for search engines"
+  },
+  "seoKeywords": "workout timer, interval timer, HIIT timer, boxing timer, Tabata timer, circuit timer, rest timer, gym timer, round timer, fitness timer, training timer, exercise timer, martial arts timer, WorkoutBell",
+  "@seoKeywords": {
+    "description": "Comma-separated SEO keywords for search engines"
+  },
+  "storeKeywords": "workout timer,interval,HIIT,boxing,rest,round,gym,circuit,tabata,fitness,training,exercise,bell",
+  "@storeKeywords": {
+    "description": "App Store Connect keywords (max 100 characters, comma-separated)"
   }
 }
 

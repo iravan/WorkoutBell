@@ -21,6 +21,9 @@
   "helpStartTime": "Inicio — mantén pulsado para mostrar horas, minutos y segundos.",
   "helpRound": "Ronda — cuenta los ciclos de entrenamiento y descanso completados.",
   "helpColors": "Anillo verde = entrenamiento. Anillo rojo = descanso. Suena una campana al terminar una fase.",
-  "helpGotIt": "Entendido"
+  "helpGotIt": "Entendido",
+  "seoDescription": "WorkoutBell — entrena, descansa, oye la campana. Temporizador de intervalos HIIT y boxeo con rondas, anillo de color y alertas claras. Sin anuncios. Sin cuenta.",
+  "seoKeywords": "temporizador entrenamiento, temporizador intervalos, temporizador HIIT, temporizador boxeo, Tabata, circuito, descanso, gimnasio, ronda, fitness, entrenamiento, ejercicio, artes marciales, WorkoutBell",
+  "storeKeywords": "temporizador,intervalos,HIIT,boxeo,descanso,ronda,gym,circuito,tabata,fitness,entrenamiento,ejercicio,campana"
 }
 

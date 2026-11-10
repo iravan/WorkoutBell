@@ -73,4 +73,16 @@ class AppLocalizationsJa extends AppLocalizations {
 
   @override
   String get helpGotIt => '閉じる';
+
+  @override
+  String get seoDescription =>
+      'WorkoutBell — トレーニング、休憩、ベルで知らせ。ラウンド・カラーリング・明確な通知付きの無料HIIT／ボクシング用インターバルタイマー。広告なし。アカウント不要。';
+
+  @override
+  String get seoKeywords =>
+      'ワークアウトタイマー, インターバルタイマー, HIITタイマー, ボクシングタイマー, タバタ, サーキット, 休憩タイマー, ジムタイマー, ラウンド, フィットネス, トレーニング, 運動, 格闘技, WorkoutBell';
+
+  @override
+  String get storeKeywords =>
+      'ワークアウト,インターバル,HIIT,ボクシング,休憩,ラウンド,ジム,サーキット,タバタ,フィットネス,トレーニング,運動,ベル';
 }

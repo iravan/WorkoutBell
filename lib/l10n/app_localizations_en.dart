@@ -80,4 +80,16 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get helpGotIt => 'Got it';
+
+  @override
+  String get seoDescription =>
+      'WorkoutBell — train, rest, hear the bell. Free HIIT and boxing interval timer with rounds, color ring, and clear alerts. No ads. No account.';
+
+  @override
+  String get seoKeywords =>
+      'workout timer, interval timer, HIIT timer, boxing timer, Tabata timer, circuit timer, rest timer, gym timer, round timer, fitness timer, training timer, exercise timer, martial arts timer, WorkoutBell';
+
+  @override
+  String get storeKeywords =>
+      'workout timer,interval,HIIT,boxing,rest,round,gym,circuit,tabata,fitness,training,exercise,bell';
 }

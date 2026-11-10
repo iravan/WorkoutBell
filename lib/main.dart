@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:audioplayers/audioplayers.dart';
@@ -8,15 +9,26 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:workout_bell/l10n/app_localizations.dart';
 import 'package:wakelock_plus/wakelock_plus.dart';
 
+Future<void> _enableWakelockSafely() async {
+  try {
+    await WakelockPlus.enable();
+  } catch (_) {
+    // Unsupported or denied on some browsers / platforms.
+  }
+}
+
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  // Keep screen on - enable wakelock for both Android and iOS
-  await WakelockPlus.enable();
-  // Set preferred orientations
-  SystemChrome.setPreferredOrientations([
-    DeviceOrientation.portraitUp,
-    DeviceOrientation.portraitDown,
-  ]);
+  if (kIsWeb) {
+    // Never block web startup on wakelock (mobile Safari can hang / fail).
+    unawaited(_enableWakelockSafely());
+  } else {
+    await _enableWakelockSafely();
+    await SystemChrome.setPreferredOrientations([
+      DeviceOrientation.portraitUp,
+      DeviceOrientation.portraitDown,
+    ]);
+  }
   runApp(const MyApp());
 }
 
@@ -196,7 +208,7 @@ class _WorkoutTimerPageState extends State<WorkoutTimerPage>
     }
     // Ensure wakelock stays enabled (screen stays on) when app resumes
     if (state == AppLifecycleState.resumed) {
-      WakelockPlus.enable();
+      unawaited(_enableWakelockSafely());
     }
   }
 
@@ -219,13 +231,16 @@ class _WorkoutTimerPageState extends State<WorkoutTimerPage>
   }
 
   Future<void> _initializeAudio() async {
-    audioPlayer = AudioPlayer();
-    // Configure for background playback
-    await audioPlayer?.setPlayerMode(PlayerMode.mediaPlayer);
-    // Set release mode to release for background playback
-    await audioPlayer?.setReleaseMode(ReleaseMode.release);
-    // Note: You'll need to add a boxingbell.mp3 file to assets/sounds/
-    // For now, we'll use a system sound as fallback
+    try {
+      audioPlayer = AudioPlayer();
+      // Configure for background playback
+      await audioPlayer?.setPlayerMode(PlayerMode.mediaPlayer);
+      // Set release mode to release for background playback
+      await audioPlayer?.setReleaseMode(ReleaseMode.release);
+    } catch (_) {
+      // Audio may be unavailable until a user gesture on mobile web.
+      audioPlayer = null;
+    }
   }
 
   void _updateStartTime() {

@@ -21,6 +21,9 @@
   "helpStartTime": "开始于 — 长按显示时、分、秒。",
   "helpRound": "轮次 — 统计已完成的锻炼与休息循环。",
   "helpColors": "绿色圆环 = 锻炼。红色圆环 = 休息。阶段结束时会响起铃声。",
-  "helpGotIt": "知道了"
+  "helpGotIt": "知道了",
+  "seoDescription": "WorkoutBell — 训练、休息、听铃声。带轮次、彩色圆环和清晰提醒的免费 HIIT / 拳击间歇计时器。无广告。无需账号。",
+  "seoKeywords": "锻炼计时器, 间歇计时器, HIIT计时器, 拳击计时器, 塔巴塔, 循环训练, 休息计时器, 健身计时器, 轮次, 健身, 训练, 运动, 武术, WorkoutBell",
+  "storeKeywords": "锻炼计时器,间歇,HIIT,拳击,休息,轮次,健身,循环,塔巴塔,训练,运动,铃声"
 }
 

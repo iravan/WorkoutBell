@@ -81,4 +81,16 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get helpGotIt => 'Compris';
+
+  @override
+  String get seoDescription =>
+      'WorkoutBell — entraînez-vous, reposez-vous, écoutez la cloche. Minuteur d\'intervalles HIIT et boxe avec tours, anneau coloré et alertes claires. Sans pub. Sans compte.';
+
+  @override
+  String get seoKeywords =>
+      'minuteur entraînement, minuteur intervalle, minuteur HIIT, minuteur boxe, Tabata, circuit, repos, salle de sport, tour, fitness, training, exercice, arts martiaux, WorkoutBell';
+
+  @override
+  String get storeKeywords =>
+      'minuteur,intervalle,HIIT,boxe,repos,tour,sport,circuit,tabata,fitness,entraînement,exercice,cloche';
 }

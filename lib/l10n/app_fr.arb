@@ -21,6 +21,9 @@
   "helpStartTime": "Début — appui long pour afficher heures, minutes et secondes.",
   "helpRound": "Tour — compte les cycles d'entraînement et de repos terminés.",
   "helpColors": "Anneau vert = entraînement. Anneau rouge = repos. Une cloche sonne à la fin d'une phase.",
-  "helpGotIt": "Compris"
+  "helpGotIt": "Compris",
+  "seoDescription": "WorkoutBell — entraînez-vous, reposez-vous, écoutez la cloche. Minuteur d'intervalles HIIT et boxe avec tours, anneau coloré et alertes claires. Sans pub. Sans compte.",
+  "seoKeywords": "minuteur entraînement, minuteur intervalle, minuteur HIIT, minuteur boxe, Tabata, circuit, repos, salle de sport, tour, fitness, training, exercice, arts martiaux, WorkoutBell",
+  "storeKeywords": "minuteur,intervalle,HIIT,boxe,repos,tour,sport,circuit,tabata,fitness,entraînement,exercice,cloche"
 }
 

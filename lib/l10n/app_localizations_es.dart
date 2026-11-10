@@ -81,4 +81,16 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get helpGotIt => 'Entendido';
+
+  @override
+  String get seoDescription =>
+      'WorkoutBell — entrena, descansa, oye la campana. Temporizador de intervalos HIIT y boxeo con rondas, anillo de color y alertas claras. Sin anuncios. Sin cuenta.';
+
+  @override
+  String get seoKeywords =>
+      'temporizador entrenamiento, temporizador intervalos, temporizador HIIT, temporizador boxeo, Tabata, circuito, descanso, gimnasio, ronda, fitness, entrenamiento, ejercicio, artes marciales, WorkoutBell';
+
+  @override
+  String get storeKeywords =>
+      'temporizador,intervalos,HIIT,boxeo,descanso,ronda,gym,circuito,tabata,fitness,entrenamiento,ejercicio,campana';
 }

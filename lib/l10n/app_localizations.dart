@@ -237,6 +237,24 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Got it'**
   String get helpGotIt;
+
+  /// HTML meta description for search engines
+  ///
+  /// In en, this message translates to:
+  /// **'WorkoutBell — train, rest, hear the bell. Free HIIT and boxing interval timer with rounds, color ring, and clear alerts. No ads. No account.'**
+  String get seoDescription;
+
+  /// Comma-separated SEO keywords for search engines
+  ///
+  /// In en, this message translates to:
+  /// **'workout timer, interval timer, HIIT timer, boxing timer, Tabata timer, circuit timer, rest timer, gym timer, round timer, fitness timer, training timer, exercise timer, martial arts timer, WorkoutBell'**
+  String get seoKeywords;
+
+  /// App Store Connect keywords (max 100 characters, comma-separated)
+  ///
+  /// In en, this message translates to:
+  /// **'workout timer,interval,HIIT,boxing,rest,round,gym,circuit,tabata,fitness,training,exercise,bell'**
+  String get storeKeywords;
 }
 
 class _AppLocalizationsDelegate
