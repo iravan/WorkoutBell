@@ -5,7 +5,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'dart:async';
 import 'dart:math' as math;
 import 'package:flutter_localizations/flutter_localizations.dart';
-import 'package:workout_timer/l10n/app_localizations.dart';
+import 'package:workout_bell/l10n/app_localizations.dart';
 import 'package:wakelock_plus/wakelock_plus.dart';
 
 void main() async {
