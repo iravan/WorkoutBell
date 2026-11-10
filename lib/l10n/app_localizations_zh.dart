@@ -76,15 +76,14 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get seoDescription =>
-      'WorkoutBell — train, rest, hear the bell. Free HIIT and boxing interval timer with rounds, color ring, and clear alerts. No ads. No account.';
+      'WorkoutBell — 训练、休息、听铃声。带轮次、彩色圆环和清晰提醒的免费 HIIT / 拳击间歇计时器。无广告。无需账号。';
 
   @override
   String get seoKeywords =>
-      'workout timer, interval timer, HIIT timer, boxing timer, Tabata timer, circuit timer, rest timer, gym timer, round timer, fitness timer, training timer, exercise timer, martial arts timer, WorkoutBell';
+      '锻炼计时器, 间歇计时器, HIIT计时器, 拳击计时器, 塔巴塔, 循环训练, 休息计时器, 健身计时器, 轮次, 健身, 训练, 运动, 武术, WorkoutBell';
 
   @override
-  String get storeKeywords =>
-      'workout timer,interval,HIIT,boxing,rest,round,gym,circuit,tabata,fitness,training,exercise,bell';
+  String get storeKeywords => '锻炼计时器,间歇,HIIT,拳击,休息,轮次,健身,循环,塔巴塔,训练,运动,铃声';
 }
 
 /// The translations for Chinese, as used in Hong Kong (`zh_HK`).
@@ -238,4 +237,15 @@ class AppLocalizationsZhTw extends AppLocalizationsZh {
 
   @override
   String get helpGotIt => '知道了';
+
+  @override
+  String get seoDescription =>
+      'WorkoutBell — 訓練、休息、聽鈴聲。含輪次、彩色圓環與清楚提醒的免費 HIIT／拳擊間歇計時器。無廣告。無需帳號。';
+
+  @override
+  String get seoKeywords =>
+      '鍛鍊計時器, 間歇計時器, HIIT計時器, 拳擊計時器, 塔巴塔, 循環訓練, 休息計時器, 健身計時器, 輪次, 健身, 訓練, 運動, 武術, WorkoutBell';
+
+  @override
+  String get storeKeywords => '鍛鍊計時器,間歇,HIIT,拳擊,休息,輪次,健身,循環,塔巴塔,訓練,運動,鈴聲';
 }

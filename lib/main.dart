@@ -184,6 +184,8 @@ class _WorkoutTimerPageState extends State<WorkoutTimerPage>
 
   Timer? timer;
   AudioPlayer? audioPlayer;
+  /// After screen lock, mobile browsers often need a tap before audio works.
+  bool _audioNeedsPrime = false;
 
   @override
   void initState() {
@@ -200,16 +202,19 @@ class _WorkoutTimerPageState extends State<WorkoutTimerPage>
   @override
   void didChangeAppLifecycleState(AppLifecycleState state) {
     super.didChangeAppLifecycleState(state);
-    // Ensure audio session stays active when app goes to background
-    if (state == AppLifecycleState.paused ||
-        state == AppLifecycleState.inactive) {
-      // Keep audio session active for background playback
-      _initializeAudio();
-    }
-    // Ensure wakelock stays enabled (screen stays on) when app resumes
     if (state == AppLifecycleState.resumed) {
       unawaited(_enableWakelockSafely());
+      // Mobile web suspends AudioContext while the screen is locked; rebuild
+      // the player on resume so the next phase bell can play again.
+      _audioNeedsPrime = kIsWeb;
+      unawaited(_initializeAudio());
     }
+  }
+
+  void _primeAudioAfterUnlock() {
+    if (!_audioNeedsPrime) return;
+    _audioNeedsPrime = false;
+    unawaited(_initializeAudio());
   }
 
   Future<void> _loadPreferences() async {
@@ -232,11 +237,18 @@ class _WorkoutTimerPageState extends State<WorkoutTimerPage>
 
   Future<void> _initializeAudio() async {
     try {
-      audioPlayer = AudioPlayer();
-      // Configure for background playback
-      await audioPlayer?.setPlayerMode(PlayerMode.mediaPlayer);
-      // Set release mode to release for background playback
-      await audioPlayer?.setReleaseMode(ReleaseMode.release);
+      await audioPlayer?.dispose();
+    } catch (_) {}
+    audioPlayer = null;
+
+    try {
+      final player = AudioPlayer();
+      // mediaPlayer keeps the session suitable for short alert sounds.
+      await player.setPlayerMode(PlayerMode.mediaPlayer);
+      await player.setReleaseMode(ReleaseMode.stop);
+      // Preload so the first play after unlock does not race source load.
+      await player.setSource(AssetSource('sounds/boxingbell.mp3'));
+      audioPlayer = player;
     } catch (_) {
       // Audio may be unavailable until a user gesture on mobile web.
       audioPlayer = null;
@@ -515,12 +527,24 @@ class _WorkoutTimerPageState extends State<WorkoutTimerPage>
 
   Future<void> _playSound() async {
     try {
-      // Try to play boxingbell.mp3 from assets
-      // PlayerMode is already set to mediaPlayer in _initializeAudio for background playback
-      await audioPlayer?.play(AssetSource('sounds/boxingbell.mp3'));
-    } catch (e) {
-      // Fallback to system sound if asset not found
-      HapticFeedback.mediumImpact();
+      if (audioPlayer == null) {
+        await _initializeAudio();
+      }
+      final player = audioPlayer;
+      if (player == null) {
+        HapticFeedback.mediumImpact();
+        return;
+      }
+      // stop + play resumes a suspended web AudioContext when possible.
+      await player.stop();
+      await player.play(AssetSource('sounds/boxingbell.mp3'));
+    } catch (_) {
+      try {
+        await _initializeAudio();
+        await audioPlayer?.play(AssetSource('sounds/boxingbell.mp3'));
+      } catch (_) {
+        HapticFeedback.mediumImpact();
+      }
     }
   }
 
@@ -646,7 +670,10 @@ class _WorkoutTimerPageState extends State<WorkoutTimerPage>
 
     return Scaffold(
       backgroundColor: Theme.of(context).scaffoldBackgroundColor,
-      body: SafeArea(
+      body: Listener(
+        behavior: HitTestBehavior.translucent,
+        onPointerDown: (_) => _primeAudioAfterUnlock(),
+        child: SafeArea(
         child: Padding(
           padding: const EdgeInsets.all(16.0),
           child: Column(
@@ -836,6 +863,7 @@ class _WorkoutTimerPageState extends State<WorkoutTimerPage>
             ],
           ),
         ),
+      ),
       ),
     );
   }
