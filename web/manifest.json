@@ -3,7 +3,7 @@
     "short_name": "WorkoutBell",
     "start_url": ".",
     "display": "standalone",
-    "background_color": "#121212",
+    "background_color": "#FFFFFF",
     "theme_color": "#121212",
     "description": "Simple workout and rest interval timer with rounds and bell alerts.",
     "orientation": "portrait-primary",
