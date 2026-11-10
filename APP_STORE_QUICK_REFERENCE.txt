@@ -67,9 +67,9 @@ Download WorkoutBell and keep your intervals honest.
 ───────────────────────────────────────────────────────────────
 
 URLS:
-Marketing: https://iravan.github.io/workout_timer/
-Support:   https://github.com/iravan/workout_timer/issues
-Privacy:   https://github.com/iravan/workout_timer/blob/main/PRIVACY.md
+Marketing: https://iravan.github.io/WorkoutBell/
+Support:   https://github.com/iravan/WorkoutBell/issues
+Privacy:   https://github.com/iravan/WorkoutBell/blob/main/PRIVACY.md
 
 CATEGORY:
 Primary: Health & Fitness

@@ -4,7 +4,7 @@
 
 A glanceable interval timer for HIIT, boxing, circuits, and class rounds — big countdown, color ring, round counter, and a clear bell when the phase changes.
 
-**[Open free web app →](https://iravan.github.io/workout_timer/)**
+**[Open free web app →](https://iravan.github.io/WorkoutBell/)**
 
 ## Screenshots
 
@@ -46,7 +46,7 @@ HIIT · Boxing / martial arts · Circuit training · Strength rest timers · Gro
 ## Platforms
 
 Flutter app for **iOS** and **Android**, plus a **web demo**:  
-https://iravan.github.io/workout_timer/
+https://iravan.github.io/WorkoutBell/
 
 ## Run locally
 
@@ -62,4 +62,4 @@ See [Privacy Policy](PRIVACY.md).
 
 ## License
 
-Personal / portfolio project. See repository for details.
+[MIT](LICENSE)

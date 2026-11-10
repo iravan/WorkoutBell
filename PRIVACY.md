@@ -25,7 +25,7 @@ The App is suitable for general audiences and does not knowingly collect data fr
 ## Contact
 
 Questions about this policy: open an issue at  
-https://github.com/iravan/workout_timer/issues
+https://github.com/iravan/WorkoutBell/issues
 
 ## Changes
 

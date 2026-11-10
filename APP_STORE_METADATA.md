@@ -10,9 +10,9 @@
 | **Differentiators** | Bell cue, color ring, round + session start time, no ads/accounts, 7 locales |
 | **Category** | Health & Fitness (primary), Sports (secondary) |
 | **Age** | 4+ |
-| **Marketing URL** | https://iravan.github.io/workout_timer/ |
-| **Support URL** | https://github.com/iravan/workout_timer/issues |
-| **Privacy URL** | https://github.com/iravan/workout_timer/blob/main/PRIVACY.md |
+| **Marketing URL** | https://iravan.github.io/WorkoutBell/ |
+| **Support URL** | https://github.com/iravan/WorkoutBell/issues |
+| **Privacy URL** | https://github.com/iravan/WorkoutBell/blob/main/PRIVACY.md |
 
 ---
 

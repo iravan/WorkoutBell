@@ -44,10 +44,6 @@ app.*.map.json
 /android/app/profile
 /android/app/release
 
-windows
-linux
-web
-macos
 # Android root build artifacts
 android/build/
 
